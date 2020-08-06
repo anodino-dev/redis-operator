@@ -12,6 +12,8 @@
 
 A Golang based redis operator that will make/oversee Redis standalone/cluster mode setup on top of the Kubernetes. It can create a redis cluster setup with best practices on Cloud as well as the Bare metal environment. Also, it provides an in-built monitoring capability using redis-exporter.
 
+For documentation, please refer to https://ot-container-kit.github.io/redis-operator/#/
+
 ## Architecture
 
 <div align="center">
@@ -37,7 +39,7 @@ Here the features which are supported by this operator:-
 
 ### Getting Started
 
-If you want to deploy redis-operator from scratch to a local Minikube cluster, begin with the [Getting started](./GETTING_STARTED.md) document. It will guide your through the setup step-by-step.
+If you want to deploy redis-operator from scratch to a local Minikube cluster, begin with the [Getting started](https://ot-container-kit.github.io/redis-operator/#/quickstart/quickstart) document. It will guide your through the setup step-by-step.
 
 ### Example
 
@@ -68,18 +70,17 @@ Creating redis cluster or standalone setup.
 
 ```shell
 # Create redis cluster setup
-helm upgrade redis-cluster ./helm/redis-setup --set redisSetup.setupMode="cluster" \
---set redisSetup.clusterSize=3 \
---install --namespace redis-operator
+helm upgrade redis-cluster ./helm/redis-setup -f ./helm/redis-setup/cluster-values.yaml \
+  --set setupMode="cluster" --set cluster.size=3 \
+  --install --namespace redis-operator
 ```
 
 ```shell
 # Create redis standalone setup
-helm upgrade redis ./helm/redis-setup --set redisSetup.setupMode="standalone" \
---install --namespace redis-operator
+helm upgrade redis ./helm/redis-setup -f ./helm/redis-setup/cluster-values.yaml \
+  --set setupMode="standalone" \
+  --install --namespace redis-operator
 ```
-
-Other customizable values are present in [values.yaml](./helm/redis-setup/values.yaml) with description.
 
 ### Monitoring with Prometheus
 
@@ -94,19 +95,13 @@ To monitor redis performance we will be using prometheus. In any case, extra pro
 
 ### Development
 
-Please see our [DEVELOPMENT.md](./DEVELOPMENT.md) for details.
+Please see our [DEVELOPMENT.md](https://ot-container-kit.github.io/redis-operator/#/development/development) for details.
 
 ### Release History
 
-Please see our [CHNANGELOG.md](./CHANGELOG.md) for details.
+Please see our [CHANGELOG.md](./CHANGELOG.md) for details.
 
 ### Documentation
 
-Please see our [GETTING_STARTED.md](./GETTING_STARTED.md) for details.
+Please see our [GETTING_STARTED.md](https://ot-container-kit.github.io/redis-operator/#/quickstart/quickstart) for details.
 
-## To Do
-
-- Dynamic Configuration Update
-- Add unit test cases
-- Logging needs to be structured
-- Fix permissions in role and rolebindings
